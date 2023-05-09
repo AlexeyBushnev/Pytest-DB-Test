@@ -1,23 +1,45 @@
 import allure
 import pytest
 import pyodbc
+import pymssql
 
 from test_settings import SQL_SERVER_NAME
+from test_settings import USERNAME
+from test_settings import PASSWORD
 
 
 def get_db_connection_cursor():
     # pyodbc connection is auto closeable, no need to close manually
-    return pyodbc.connect('Driver={SQL Server};'
-                          f'Server={SQL_SERVER_NAME};'
-                          'Database=TRN;'
-                          'Trusted_Connection=yes;').cursor()
+    return pymssql.connect('Driver={SQL Server};'
+                           f'Server={SQL_SERVER_NAME};'
+                           'Database=TRN;'
+                           'Trusted_Connection=yes;').cursor()
+
+
+def get_db_connection_cursor1():
+    # pyodbc connection is auto closeable, no need to close manually
+    return pymssql.connect('Driver={SQL Server};'
+                           f'Server={SQL_SERVER_NAME};'
+                           'Port=1433;'
+                           'Database=TRN;'
+                           f'UID={USERNAME};'
+                           f'PWD={PASSWORD};').cursor()
+
+
+def get_db_connection_cursor2():
+    # pyodbc connection is auto closeable, no need to close manually
+    return pymssql.connect(host='localhost', server=SQL_SERVER_NAME, port='1433', user=USERNAME, password=PASSWORD)
 
 
 class TestDB:
     @pytest.mark.test_trn_db
     def test_simple_data_read(self):
-        allure.dynamic.title("Simple test that check the Database is accessible and we can read the data.")
-        rows = get_db_connection_cursor().execute("""SELECT * FROM hr.jobs""").fetchall()
+        allure.dynamic.title("Simple test that checks the Database is accessible and we can read the data.")
+
+        conn = get_db_connection_cursor2()
+        cursor = conn.cursor()
+        cursor.execute("""SELECT * FROM TRN.hr.jobs""")
+        rows = cursor.fetchall()
         assert len(rows) > 0, \
             f"""Wrong number of fields!\nExpected: Number of rows is greater 0;\nActual: {len(rows)}"""
 
@@ -82,7 +104,7 @@ class TestDB:
 
     @pytest.mark.test_trn_db
     def test_region_names(self):
-        allure.dynamic.title("Current DB schema allows NULL and empty values. "
+        allure.dynamic.title("Current DB schema allows NULL and empty values."
                              "Check that regions have the notional names.")
         rows = get_db_connection_cursor() \
             .execute(f"""SELECT region_name
