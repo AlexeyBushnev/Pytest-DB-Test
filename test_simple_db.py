@@ -9,7 +9,7 @@ from test_settings import PASSWORD
 
 def get_db_connection_cursor2():
     # pyodbc connection is auto closeable, no need to close manually
-    return pymssql.connect(host='host.docker.internal', server=SQL_SERVER_NAME, port='1433', user=USERNAME, password=PASSWORD)
+    return pymssql.connect(host='192.168.0.26', server=SQL_SERVER_NAME, port='1433', user=USERNAME, password=PASSWORD)
 
 
 class TestSimpleDB:
