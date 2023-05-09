@@ -1,4 +1,4 @@
 SQL_SERVER_NAME = "XPGETBIW005C\\SQLEXPRESS"
 USERNAME = "Tester"
-PASSWORD = "******"
+PASSWORD = "tester_tester"
 
