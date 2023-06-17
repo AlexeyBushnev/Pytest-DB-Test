@@ -15,13 +15,13 @@ The test suite includes 3 Expectations:
 
 ## Steps
 
-1. Clone the repository:
+1. Clone the repository:<br>
 ```git clone https://github.com/AlexeyBushnev/Pytest-DB-Test.git```
 
-2. Navigate to the repository directory:
+2. Navigate to the repository directory:<br>
 ```cd ./ge```
 
-3. Start Jupyter Notebook:
+3. Start Jupyter Notebook:<br>
 ```jupyter notebook```
 
 4. In the Jupyter Notebook interface, navigate to the notebook file: `ge_test.ipynb`
@@ -37,7 +37,7 @@ The test suite includes 3 Expectations:
 9. Save the notebook and exit Jupyter Notebook.
 
 ## Additional Resources
-You can generate Data Docs report in readable HTML format:
+You can generate Data Docs report in readable HTML format:<br>
 ```great_expectations docs build```
 Navigate to ```great_expectations/uncommitted/data_docs/local_site/``` directory and open ```index.html``` file with browser.
 
